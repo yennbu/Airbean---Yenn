@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 import authRouter from './routes/auth.js';
-import menuRouter from './routes/menu.js';
+import menuRouter from './routes/menu.js'; 
 import cartRouter from './routes/cart.js';
 import orderRouter from './routes/orders.js';
 
