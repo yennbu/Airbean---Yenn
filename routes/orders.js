@@ -37,7 +37,7 @@ router.get('/:userId', async (req, res, next) => {
 });
 
 router.post('/', validateOrderBody, async (req, res, next) => {
-    const { cartId } = req.body;
+    const { cartId, note } = req.body;
     const cart = await getCart(cartId);
     if(cart) {
         let price = 0;
@@ -46,7 +46,8 @@ router.post('/', validateOrderBody, async (req, res, next) => {
             orderId : `order-${uuid().substring(0, 5)}`,
             userId : cartId,
             items : cart.items,
-            price : price
+            price : price,
+            note : note
         });
         if(order) {
             const result = await deleteCart(cartId);

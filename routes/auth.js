@@ -22,13 +22,13 @@ router.get('/logout', (req, res, next) => {
 
 router.post('/register', validateAuthBody, async (req, res) => {
     const { username, password } = req.body;
-    const userType = 'user';
+    const userType = req.body.role === 'admin' ? 'admin' : 'user';
     const result = await registerUser({
         username: username,
         password : password,
         role : userType,
         userId : `${userType}-${uuid().substring(0, 5)}`
-    });
+    }); 
     if(result) {
         res.status(201).json({
             success : true,
@@ -48,9 +48,13 @@ router.post('/login', validateAuthBody, async (req, res) => {
     if(user) {
         if(user.password === password) {
             global.user = user;
+
+            const isAdmin = user.role && user.role === 'admin';
+
             res.json({
                 success : true,
-                message : 'User logged in successfully'
+                message : 'User logged in successfully',
+                isAdmin: isAdmin
             });
         } else {
             res.status(400).json({

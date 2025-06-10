@@ -22,7 +22,7 @@ export async function getOrdersByUserId(userId) {
 
 export async function createOrder(order) {
     try {
-        const result = Order.create(order);
+        const result = await Order.create(order);
         return result;
     } catch(error) {
         console.log(error.message);

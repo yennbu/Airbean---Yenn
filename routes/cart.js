@@ -4,6 +4,7 @@ import { getProduct } from '../services/menu.js';
 import { getUser } from '../services/users.js';
 import { getCarts, getCart, updateCart } from '../services/cart.js';
 import { v4 as uuid } from 'uuid';
+import { deleteCart } from '../services/cart.js';
 
 const router = Router();
 
@@ -102,6 +103,29 @@ router.put('/', validateCartBody, async (req, res, next) => {
                 });
             }
     }
+});
+
+router.delete('/:cartId', async (req, res, next) => {
+    try {
+        const result = await deleteCart(req.params.cartId);
+        if (result) {
+            res.json({
+                success: true,
+                result: result
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: `No cart with id ${req.params.cartId} found`
+            });
+        }
+    } catch(error) {
+         next({
+            status: 500,
+            message: `No cart with id ${req.params.cartId} found`
+        });
+    }
+
 });
 
 export default router;

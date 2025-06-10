@@ -64,7 +64,7 @@ export async function getCart(cartId) {
 
 export async function deleteCart(cartId) {
     try {
-        let result = await Cart.deleteOne({ cartId : cartId });
+        let result = await Cart.findOneAndDelete({ cartId : cartId });
         return result;
     } catch(error) {
         console.log(error.message);
